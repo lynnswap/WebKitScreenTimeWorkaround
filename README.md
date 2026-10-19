@@ -11,9 +11,9 @@ Swift 6.3 or later is required.
 | iOS / iPadOS | 17.0 or later | 26.1 or later |
 | macOS | 12.0 or later | 26.1 or later |
 
-The package can be linked on the deployment targets above. The installation API requires iOS / iPadOS 26.1 or macOS 26.1; guard it with the availability check below. These API availability limits do not establish when the stall first occurred. Installation also checks for the required private APIs at runtime.
+The package can be linked on the deployment targets above. The 26.1 installation minimum matches the `STScreenTimeConfigurationObserver` initialization path added between the public WebKit sources for 26.0 and [iOS 26.1](https://github.com/WebKit/WebKit/blob/8914df4ab564e7a9d033eb3666ada075d8878eee/Source/WebKit/UIProcess/API/Cocoa/WKWebView.mm#L428-L435) and [macOS 26.1](https://github.com/WebKit/WebKit/blob/6214d577e8b731b897ec7155a4be62efe1ffd854/Source/WebKit/UIProcess/API/Cocoa/WKWebView.mm#L428-L435). This path creates the observer and reads `configuration.enforcesChildRestrictions`. Guard installation with the availability check below; it also checks for the required private APIs at runtime.
 
-The reproduction project records the delay on iOS 27.0. macOS execution has only been verified on 26.6.2, where tests verify configuration preservation and archived web view decoding; a Screen Time stall and the need for this workaround have not been demonstrated. The first affected OS version has not been confirmed on either platform.
+The reproduction project records the delay on iOS 27.0. macOS execution has only been verified on 26.6.2, where tests verify configuration preservation and archived web view decoding; a Screen Time stall and the need for this workaround have not been demonstrated. The source identifies when this observer path was introduced; the earliest OS version with a measurable stall has not been confirmed.
 
 ## Installation
 
