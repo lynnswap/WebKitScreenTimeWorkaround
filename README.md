@@ -51,6 +51,10 @@ Repeated calls are safe. Once installed, the workaround remains active until the
 
 The implementation swizzles `WKWebView._initializeWithConfiguration:` and sets the private `ScreenTimeEnabled` preference to `false` before WebKit initializes each web view.
 
+## Documentation
+
+[DocC documentation](https://lynnswap.github.io/WebKitScreenTimeWorkaround/documentation/webkitscreentimeworkaround/)
+
 ## Tests
 
 Run the tests on an iOS simulator:
