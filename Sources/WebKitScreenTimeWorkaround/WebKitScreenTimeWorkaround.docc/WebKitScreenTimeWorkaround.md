@@ -4,7 +4,7 @@ Disable Screen Time integration in new web views to work around stalls during te
 
 ## Overview
 
-The package requires an iOS / iPadOS deployment target of 18.4 or later and Swift 6.3
+The package requires an iOS / iPadOS deployment target of 17.0 or later and Swift 6.3
 or later. Installing the workaround requires iOS / iPadOS 26.1 or later.
 
 Call ``ScreenTimeWorkaround/install()`` on the main actor before creating the first

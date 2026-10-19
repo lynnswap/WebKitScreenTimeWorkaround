@@ -4,7 +4,7 @@ A Swift package for tests that disables Screen Time integration in newly created
 
 ## Requirements
 
-- iOS / iPadOS deployment target 18.4 or later
+- iOS / iPadOS deployment target 17.0 or later
 - iOS / iPadOS 26.1 or later to install the workaround
 - Swift 6.3 or later
 
