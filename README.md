@@ -4,7 +4,9 @@ A Swift package that disables Screen Time integration in `WKWebView` during test
 
 ## Requirements
 
-Requires Swift 6.3 or later, with a deployment target of iOS/iPadOS 17 or macOS 14 or later. Calling `install()` requires iOS/iPadOS 26.1 or macOS 26.1 or later.
+- Swift 6.3 or later
+- Deployment target: iOS/iPadOS 17 or macOS 14 or later
+- `install()`: iOS/iPadOS 26.1 or macOS 26.1 or later
 
 ## Installation
 
