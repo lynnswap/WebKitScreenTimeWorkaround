@@ -9,11 +9,12 @@ Swift 6.3 or later is required.
 | Platform | Package deployment target | Workaround installation |
 | --- | --- | --- |
 | iOS / iPadOS | 17.0 or later | 26.1 or later |
-| macOS | 12.0 or later | 12.0 or later |
+| macOS | 12.0 or later | 26.1 or later |
 
-On macOS, installation checks for the required private APIs at runtime. The
-package can be linked on earlier iOS deployment targets; use the availability
-check below before installation.
+The package can be linked on the deployment targets above. The installation API
+requires iOS / iPadOS 26.1 or macOS 26.1; use the availability check below before
+installation. These API availability limits do not establish when the stall first
+occurred. Installation also checks for the required private APIs at runtime.
 
 Call ``ScreenTimeWorkaround/install()`` on the main actor before creating the first
 `WKWebView` in the process:
@@ -24,7 +25,7 @@ import WebKitScreenTimeWorkaround
 
 @MainActor
 func makeWebView() throws -> WKWebView {
-    if #available(iOS 26.1, macOS 12.0, *) {
+    if #available(iOS 26.1, macOS 26.1, *) {
         try ScreenTimeWorkaround.install()
     }
     return WKWebView(frame: .zero)

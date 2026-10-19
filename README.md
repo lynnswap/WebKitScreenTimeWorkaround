@@ -9,9 +9,9 @@ Swift 6.3 or later is required.
 | Platform | Package deployment target | Workaround installation |
 | --- | --- | --- |
 | iOS / iPadOS | 17.0 or later | 26.1 or later |
-| macOS | 12.0 or later | 12.0 or later |
+| macOS | 12.0 or later | 26.1 or later |
 
-The package can be linked on earlier deployment targets; guard installation with the availability check below. The iOS installation requirement follows the introduction of the Screen Time configuration observer involved in this issue. On macOS, installation checks for the required private APIs at runtime.
+The package can be linked on the deployment targets above. The installation API requires iOS / iPadOS 26.1 or macOS 26.1; guard it with the availability check below. These API availability limits do not establish when the stall first occurred. Installation also checks for the required private APIs at runtime.
 
 The reproduction project records the delay on iOS 27.0. macOS execution has only been verified on 26.6.2, where tests verify configuration preservation and archived web view decoding; a Screen Time stall and the need for this workaround have not been demonstrated. The first affected OS version has not been confirmed on either platform.
 
@@ -46,7 +46,7 @@ import WebKitScreenTimeWorkaround
 
 @MainActor
 func makeWebView() throws -> WKWebView {
-    if #available(iOS 26.1, macOS 12.0, *) {
+    if #available(iOS 26.1, macOS 26.1, *) {
         try ScreenTimeWorkaround.install()
     }
     return WKWebView(frame: .zero)
