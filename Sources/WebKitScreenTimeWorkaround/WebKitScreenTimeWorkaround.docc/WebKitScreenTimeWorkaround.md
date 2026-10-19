@@ -9,7 +9,7 @@ Swift 6.3 or later is required.
 | Platform | Package deployment target | Workaround installation |
 | --- | --- | --- |
 | iOS / iPadOS | 17.0 or later | 26.1 or later |
-| macOS | 12.0 or later | 26.1 or later |
+| macOS | 14.0 or later | 26.1 or later |
 
 The package can be linked on the deployment targets above. The 26.1 installation
 minimum matches the `STScreenTimeConfigurationObserver` initialization path added

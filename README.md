@@ -9,7 +9,7 @@ Swift 6.3 or later is required.
 | Platform | Package deployment target | Workaround installation |
 | --- | --- | --- |
 | iOS / iPadOS | 17.0 or later | 26.1 or later |
-| macOS | 12.0 or later | 26.1 or later |
+| macOS | 14.0 or later | 26.1 or later |
 
 The package can be linked on the deployment targets above. The 26.1 installation minimum matches the `STScreenTimeConfigurationObserver` initialization path added between the public WebKit sources for 26.0 and [iOS 26.1](https://github.com/WebKit/WebKit/blob/8914df4ab564e7a9d033eb3666ada075d8878eee/Source/WebKit/UIProcess/API/Cocoa/WKWebView.mm#L428-L435) and [macOS 26.1](https://github.com/WebKit/WebKit/blob/6214d577e8b731b897ec7155a4be62efe1ffd854/Source/WebKit/UIProcess/API/Cocoa/WKWebView.mm#L428-L435). This path creates the observer and reads `configuration.enforcesChildRestrictions`. Guard installation with the availability check below; it also checks for the required private APIs at runtime.
 
