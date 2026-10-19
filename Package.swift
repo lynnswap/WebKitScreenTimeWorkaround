@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "WebKitScreenTimeWorkaround",
     platforms: [
-        .iOS("26.1"),
+        .iOS("18.4"),
     ],
     products: [
         .library(

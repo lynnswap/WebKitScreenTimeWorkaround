@@ -4,7 +4,8 @@ Disable Screen Time integration in new web views to work around stalls during te
 
 ## Overview
 
-The package requires iOS / iPadOS 26.1 or later and Swift 6.3 or later.
+The package requires an iOS / iPadOS deployment target of 18.4 or later and Swift 6.3
+or later. Installing the workaround requires iOS / iPadOS 26.1 or later.
 
 Call ``ScreenTimeWorkaround/install()`` on the main actor before creating the first
 `WKWebView` in the process:
@@ -15,13 +16,16 @@ import WebKitScreenTimeWorkaround
 
 @MainActor
 func makeWebView() throws -> WKWebView {
-    try ScreenTimeWorkaround.install()
+    if #available(iOS 26.1, *) {
+        try ScreenTimeWorkaround.install()
+    }
     return WKWebView(frame: .zero)
 }
 ```
 
-For tests that launch an app, install the workaround during app startup in the app
-process.
+On earlier OS versions, this example creates web views without installing the
+workaround. For tests that launch an app, install the workaround during app startup
+in the app process.
 
 ## Topics
 

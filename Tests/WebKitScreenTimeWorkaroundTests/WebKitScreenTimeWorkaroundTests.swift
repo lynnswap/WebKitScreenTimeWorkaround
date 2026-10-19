@@ -4,6 +4,7 @@ import Testing
 import WebKit
 import WebKitScreenTimeWorkaround
 
+@available(iOS 26.1, *)
 @MainActor
 @Suite(.serialized)
 struct WebKitScreenTimeWorkaroundTests {
