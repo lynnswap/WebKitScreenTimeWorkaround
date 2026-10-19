@@ -4,10 +4,11 @@ A Swift package for tests that disables Screen Time integration in newly created
 
 ## Requirements
 
-- iOS / iPadOS 26.1 or later
+- iOS / iPadOS deployment target 17.0 or later
+- iOS / iPadOS 26.1 or later to install the workaround
 - Swift 6.3 or later
 
-The minimum OS version follows the introduction of the Screen Time configuration observer involved in this issue. The reproduction project records the delay on iOS 27.0; the first affected OS version has not been confirmed by testing.
+The installation requirement follows the introduction of the Screen Time configuration observer involved in this issue. The reproduction project records the delay on iOS 27.0; the first affected OS version has not been confirmed by testing.
 
 ## Installation
 
@@ -40,10 +41,14 @@ import WebKitScreenTimeWorkaround
 
 @MainActor
 func makeWebView() throws -> WKWebView {
-    try ScreenTimeWorkaround.install()
+    if #available(iOS 26.1, *) {
+        try ScreenTimeWorkaround.install()
+    }
     return WKWebView(frame: .zero)
 }
 ```
+
+On earlier OS versions, this example creates web views without installing the workaround.
 
 Install it in the same process that creates the web views. For tests that launch an app, call it during app startup.
 
