@@ -53,7 +53,7 @@ The implementation swizzles `WKWebView._initializeWithConfiguration:` and sets t
 
 ## Documentation
 
-Read the [DocC documentation](https://lynnswap.github.io/WebKitScreenTimeWorkaround/documentation/webkitscreentimeworkaround/), which is automatically deployed from `main`.
+[DocC documentation](https://lynnswap.github.io/WebKitScreenTimeWorkaround/documentation/webkitscreentimeworkaround/)
 
 ## Tests
 
