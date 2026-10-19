@@ -42,6 +42,13 @@ jobs:
         run: |
           xcodebuild -version
           xcrun swift --version
+      - name: Start the iOS Simulator before building
+        timeout-minutes: 2
+        run: |
+          runtime="com.apple.CoreSimulator.SimRuntime.iOS-${SIMULATOR_OS//./-}"
+          simulator_id="$(xcrun simctl create "WebKitScreenTimeWorkaround CI" com.apple.CoreSimulator.SimDeviceType.iPhone-17 "$runtime")"
+          echo "SIMULATOR_UDID=${simulator_id}" >> "$GITHUB_ENV"
+          xcrun simctl boot "$simulator_id"
       - name: Build for iOS
         run: |
           xcodebuild build -scheme WebKitScreenTimeWorkaround \
@@ -55,12 +62,21 @@ jobs:
             -derivedDataPath "$RUNNER_TEMP/DeviceDerivedData" \
             CODE_SIGNING_ALLOWED=NO \
             OTHER_DOCC_FLAGS='--warnings-as-errors --analyze --experimental-documentation-coverage --coverage-summary-level detailed'
+      - name: Wait for the iOS Simulator
+        timeout-minutes: 5
+        run: xcrun simctl bootstatus "$SIMULATOR_UDID" -b
+
       - name: Test on iOS Simulator
         run: |
           xcodebuild test -scheme WebKitScreenTimeWorkaround \
-            -destination "platform=iOS Simulator,name=iPhone 17,OS=$SIMULATOR_OS" \
+            -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
+            -parallel-testing-enabled NO \
             -derivedDataPath "$RUNNER_TEMP/SimulatorDerivedData" \
             -resultBundlePath "$RUNNER_TEMP/TestResults.xcresult"
+      - name: Delete the test Simulator
+        if: always() && env.SIMULATOR_UDID != ''
+        timeout-minutes: 2
+        run: xcrun simctl delete "$SIMULATOR_UDID"
       - name: Preserve failed test diagnostics
         if: always() && (failure() || cancelled())
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
