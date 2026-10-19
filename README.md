@@ -51,6 +51,24 @@ Repeated calls are safe. Once installed, the workaround remains active until the
 
 The implementation swizzles `WKWebView._initializeWithConfiguration:` and sets the private `ScreenTimeEnabled` preference to `false` before WebKit initializes each web view.
 
+## Documentation
+
+Read the [DocC documentation](https://lynnswap.github.io/WebKitScreenTimeWorkaround/documentation/webkitscreentimeworkaround/), which is automatically deployed from `main`.
+
+To read it locally, open the package in Xcode and choose Product > Build Documentation,
+or build it from the command line:
+
+```sh
+xcodebuild docbuild \
+    -scheme WebKitScreenTimeWorkaround \
+    -destination 'generic/platform=iOS' \
+    CODE_SIGNING_ALLOWED=NO \
+    OTHER_DOCC_FLAGS='--warnings-as-errors --analyze'
+```
+
+To generate the static site used by GitHub Pages, run `bash scripts/build-documentation.sh`.
+The output is written to `.build/documentation`.
+
 ## Tests
 
 Run the tests on an iOS simulator:

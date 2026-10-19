@@ -48,6 +48,13 @@ jobs:
             -destination 'generic/platform=iOS' \
             -derivedDataPath "$RUNNER_TEMP/DeviceDerivedData" \
             CODE_SIGNING_ALLOWED=NO
+      - name: Build documentation
+        run: |
+          xcodebuild docbuild -scheme WebKitScreenTimeWorkaround \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath "$RUNNER_TEMP/DeviceDerivedData" \
+            CODE_SIGNING_ALLOWED=NO \
+            OTHER_DOCC_FLAGS='--warnings-as-errors --analyze --experimental-documentation-coverage --coverage-summary-level detailed'
       - name: Test on iOS Simulator
         run: |
           xcodebuild test -scheme WebKitScreenTimeWorkaround \
@@ -62,5 +69,6 @@ jobs:
           path: |
             ${{ runner.temp }}/TestResults.xcresult
             ${{ runner.temp }}/SimulatorDerivedData/Logs/Test
+            ${{ runner.temp }}/DeviceDerivedData/Logs/Build
           if-no-files-found: warn
           retention-days: 7
