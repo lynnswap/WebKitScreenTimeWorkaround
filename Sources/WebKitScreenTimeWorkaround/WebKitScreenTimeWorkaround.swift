@@ -21,7 +21,7 @@ public enum ScreenTimeWorkaround {
     ///
     /// - Throws: An error if this WebKit runtime does not expose the required
     ///   private APIs, lacks the `ScreenTimeEnabled` feature, or cannot disable it.
-    @available(iOS 26.1, macOS 26.0, *)
+    @available(iOS 26.1, macOS 12.0, *)
     public static func install() throws {
         try WSTScreenTimeRuntime.install()
     }
