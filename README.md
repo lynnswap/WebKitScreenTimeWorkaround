@@ -4,11 +4,16 @@ A Swift package for tests that disables Screen Time integration in newly created
 
 ## Requirements
 
-- iOS / iPadOS deployment target 17.0 or later
-- iOS / iPadOS 26.1 or later to install the workaround
-- Swift 6.3 or later
+Swift 6.3 or later is required.
 
-The installation requirement follows the introduction of the Screen Time configuration observer involved in this issue. The reproduction project records the delay on iOS 27.0; the first affected OS version has not been confirmed by testing.
+| Platform | Package deployment target | Workaround installation |
+| --- | --- | --- |
+| iOS / iPadOS | 17.0 or later | 26.1 or later |
+| macOS | 14.0 or later | 26.1 or later |
+
+The package can be linked on the deployment targets above. The 26.1 installation minimum matches the `STScreenTimeConfigurationObserver` initialization path added between the public WebKit sources for 26.0 and [iOS 26.1](https://github.com/WebKit/WebKit/blob/8914df4ab564e7a9d033eb3666ada075d8878eee/Source/WebKit/UIProcess/API/Cocoa/WKWebView.mm#L428-L435) and [macOS 26.1](https://github.com/WebKit/WebKit/blob/6214d577e8b731b897ec7155a4be62efe1ffd854/Source/WebKit/UIProcess/API/Cocoa/WKWebView.mm#L428-L435). This path creates the observer and reads `configuration.enforcesChildRestrictions`. Guard installation with the availability check below; it also checks for the required private APIs at runtime.
+
+The reproduction project records the delay on iOS 27.0. macOS execution has only been verified on 26.6.2, where tests verify configuration preservation and archived web view decoding; a Screen Time stall and the need for this workaround have not been demonstrated. The source identifies when this observer path was introduced; the earliest OS version with a measurable stall has not been confirmed.
 
 ## Installation
 
@@ -41,7 +46,7 @@ import WebKitScreenTimeWorkaround
 
 @MainActor
 func makeWebView() throws -> WKWebView {
-    if #available(iOS 26.1, *) {
+    if #available(iOS 26.1, macOS 26.1, *) {
         try ScreenTimeWorkaround.install()
     }
     return WKWebView(frame: .zero)
@@ -62,12 +67,20 @@ The implementation swizzles `WKWebView._initializeWithConfiguration:` and sets t
 
 ## Tests
 
-Run the tests on an iOS simulator:
+Run the existing configuration-preservation and archive-decoding tests on an iOS simulator:
 
 ```sh
 xcodebuild test \
     -scheme WebKitScreenTimeWorkaround \
     -destination 'platform=iOS Simulator,name=iPhone 17,OS=27.0'
+```
+
+Run the same tests on a Mac:
+
+```sh
+xcodebuild test \
+    -scheme WebKitScreenTimeWorkaround \
+    -destination 'platform=macOS,arch=arm64'
 ```
 
 ## License
