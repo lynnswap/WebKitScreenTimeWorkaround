@@ -4,11 +4,11 @@ import Testing
 import WebKit
 import WebKitScreenTimeWorkaround
 
-@available(iOS 26.1, *)
 @MainActor
 @Suite(.serialized)
 struct WebKitScreenTimeWorkaroundTests {
     @Test
+    @available(iOS 26.1, *)
     func newWebViewsPreserveSuppliedConfiguration() throws {
         let feature = try ScreenTimeFeature()
         let configuration = WKWebViewConfiguration()
@@ -36,6 +36,7 @@ struct WebKitScreenTimeWorkaroundTests {
     }
 
     @Test
+    @available(iOS 26.1, *)
     func decodedWebViewsDisableScreenTime() throws {
         try ScreenTimeWorkaround.install()
         let feature = try ScreenTimeFeature()
