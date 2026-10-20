@@ -3,7 +3,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 NS_SWIFT_UI_ACTOR
-@interface WSTScreenTimeRuntime : NSObject
+@interface WKTWScreenTimeRuntime : NSObject
 + (BOOL)installWithError:(NSError * _Nullable * _Nullable)error NS_SWIFT_NAME(install());
 @end
 

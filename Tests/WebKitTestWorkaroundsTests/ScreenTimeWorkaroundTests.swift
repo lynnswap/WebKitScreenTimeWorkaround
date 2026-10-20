@@ -2,11 +2,11 @@ import Foundation
 import ObjectiveC
 import Testing
 import WebKit
-import WebKitScreenTimeWorkaround
+import WebKitTestWorkarounds
 
 @MainActor
 @Suite(.serialized)
-struct WebKitScreenTimeWorkaroundTests {
+struct ScreenTimeWorkaroundTests {
     @Test
     @available(iOS 26.1, macOS 26.1, *)
     func newWebViewsPreserveSuppliedConfiguration() throws {

@@ -1,24 +1,25 @@
-#import "WebKitScreenTimeWorkaroundRuntime.h"
+#import "WebKitTestWorkaroundsRuntime.h"
 #import <WebKit/WebKit.h>
 #import <objc/runtime.h>
 
 // These declarations match WebKit's WKPreferencesPrivate.h and _WKFeature.h.
-@interface NSObject (WSTFeature)
+@interface NSObject (WKTWFeature)
 @property (nonatomic, readonly, copy) NSString *key;
 @end
 
-@interface WKPreferences (WSTFeatures)
+@interface WKPreferences (WKTWFeatures)
 + (NSArray<NSObject *> *)_features;
 - (BOOL)_isEnabledForFeature:(NSObject *)feature;
 - (void)_setEnabled:(BOOL)enabled forFeature:(NSObject *)feature;
 @end
 
-@interface WKWebViewConfiguration (WSTConfiguration)
+@interface WKWebViewConfiguration (WKTWConfiguration)
 - (id)_visitedLinkStore;
 @end
 
 static NSError *InstallationError(NSString *description)
 {
+    // Preserve the domain for callers inspecting bridged errors.
     return [NSError errorWithDomain:@"WebKitScreenTimeWorkaround" code:1
                           userInfo:@{NSLocalizedDescriptionKey: description}];
 }
@@ -75,7 +76,7 @@ static NSError *Install(void)
     return nil;
 }
 
-@implementation WSTScreenTimeRuntime
+@implementation WKTWScreenTimeRuntime
 
 + (BOOL)installWithError:(NSError **)error
 {

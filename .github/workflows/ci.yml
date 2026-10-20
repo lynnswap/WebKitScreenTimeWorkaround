@@ -46,18 +46,18 @@ jobs:
         timeout-minutes: 2
         run: |
           runtime="com.apple.CoreSimulator.SimRuntime.iOS-${SIMULATOR_OS//./-}"
-          simulator_id="$(xcrun simctl create "WebKitScreenTimeWorkaround CI" com.apple.CoreSimulator.SimDeviceType.iPhone-17 "$runtime")"
+          simulator_id="$(xcrun simctl create "WebKitTestWorkarounds CI" com.apple.CoreSimulator.SimDeviceType.iPhone-17 "$runtime")"
           echo "SIMULATOR_UDID=${simulator_id}" >> "$GITHUB_ENV"
           xcrun simctl boot "$simulator_id"
       - name: Build for iOS
         run: |
-          xcodebuild build -scheme WebKitScreenTimeWorkaround \
+          xcodebuild build -scheme WebKitTestWorkarounds \
             -destination 'generic/platform=iOS' \
             -derivedDataPath "$RUNNER_TEMP/DeviceDerivedData" \
             CODE_SIGNING_ALLOWED=NO
       - name: Build documentation
         run: |
-          xcodebuild docbuild -scheme WebKitScreenTimeWorkaround \
+          xcodebuild docbuild -scheme WebKitTestWorkarounds \
             -destination 'generic/platform=iOS' \
             -derivedDataPath "$RUNNER_TEMP/DeviceDerivedData" \
             CODE_SIGNING_ALLOWED=NO \
@@ -68,7 +68,7 @@ jobs:
 
       - name: Test on iOS Simulator
         run: |
-          xcodebuild test -scheme WebKitScreenTimeWorkaround \
+          xcodebuild test -scheme WebKitTestWorkarounds \
             -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
             -parallel-testing-enabled NO \
             -derivedDataPath "$RUNNER_TEMP/SimulatorDerivedData" \
@@ -105,7 +105,7 @@ jobs:
           xcrun swift --version
       - name: Test on macOS
         run: |
-          xcodebuild test -scheme WebKitScreenTimeWorkaround \
+          xcodebuild test -scheme WebKitTestWorkarounds \
             -destination 'platform=macOS,arch=arm64' \
             -derivedDataPath "$RUNNER_TEMP/MacDerivedData" \
             -resultBundlePath "$RUNNER_TEMP/MacTestResults.xcresult"
