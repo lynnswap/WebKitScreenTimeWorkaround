@@ -1,12 +1,13 @@
 # WebKitTestWorkarounds
 
-A Swift package of opt-in workarounds for `WKWebView` tests. The Screen Time workaround uses private WebKit APIs to disable Screen Time integration and avoid the stalls reproduced in [WKWebViewScreenTimeRepro](https://github.com/lynnswap/WKWebViewScreenTimeRepro).
+A Swift package of opt-in workarounds for `WKWebView` tests. The Screen Time workaround uses private WebKit APIs to disable Screen Time integration and avoid the stalls reproduced in [WKWebViewScreenTimeRepro](https://github.com/lynnswap/WKWebViewScreenTimeRepro). The Intelligence Tasks workaround temporarily stops `intelligencetasksd` during tests and restores its launchd registration afterward.
 
 ## Requirements
 
 - Swift 6.3 or later
 - Deployment target: iOS/iPadOS 17 or macOS 14 or later
 - `ScreenTimeWorkaround.install()`: iOS/iPadOS 26.1 or macOS 26.1 or later
+- `IntelligenceTasksWorkaround`: iOS/iPadOS Simulator only
 
 ## Installation
 
@@ -50,6 +51,12 @@ For tests that launch an app, install the workaround during app startup, in the 
 
 Once installed, it affects all new `WKWebView` instances until the process exits. Existing web views are unchanged. Installation throws if the required private APIs are unavailable, and repeated calls reuse the first installation result.
 
+## Intelligence Tasks workaround
+
+Call `IntelligenceTasksWorkaround.stop()` before testing and `restore()` afterward, both on the main actor. Always attempt restoration, including when stopping the service or running the tests fails, and report restoration errors. See [Stopping and restoring Intelligence Tasks](https://lynnswap.github.io/WebKitTestWorkarounds/documentation/webkittestworkarounds/intelligencetasks/) for a complete example.
+
+This API is available only on iOS/iPadOS Simulator and affects the entire current device. Exiting the calling process does not restore the service. Coordinate its use with other tests and processes that use the same Simulator. `AppIntentsLiveEntityService` is outside the scope of this workaround.
+
 ## Migrating from 0.3.0
 
 When updating from `WebKitScreenTimeWorkaround` 0.3.0, use the package URL and `main` branch above, change the product dependency to `WebKitTestWorkarounds`, and replace `import WebKitScreenTimeWorkaround` with `import WebKitTestWorkarounds`. Calls to `ScreenTimeWorkaround.install()` stay the same.
@@ -60,7 +67,7 @@ When updating from `WebKitScreenTimeWorkaround` 0.3.0, use the package URL and `
 
 ## Tests
 
-Run the configuration preservation and archive decoding tests on an iOS simulator:
+Run the package tests on an iOS simulator. The suite includes a live test that stops and restores `intelligencetasksd` on that Simulator:
 
 ```sh
 xcodebuild test \
@@ -68,7 +75,7 @@ xcodebuild test \
     -destination 'platform=iOS Simulator,name=iPhone 17,OS=27.0'
 ```
 
-Run the same tests on a Mac:
+Run the Screen Time tests on a Mac:
 
 ```sh
 xcodebuild test \
