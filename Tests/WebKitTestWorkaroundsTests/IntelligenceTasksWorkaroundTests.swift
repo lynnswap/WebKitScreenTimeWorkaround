@@ -1,4 +1,4 @@
-#if targetEnvironment(simulator)
+#if os(iOS) && targetEnvironment(simulator)
 import Foundation
 import Testing
 @testable import WebKitTestWorkarounds
