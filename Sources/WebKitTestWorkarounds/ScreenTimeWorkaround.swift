@@ -1,4 +1,4 @@
-internal import WebKitScreenTimeWorkaroundRuntime
+internal import WebKitTestWorkaroundsRuntime
 
 /// Disables Screen Time integration in web views initialized after installation.
 ///
@@ -23,6 +23,6 @@ public enum ScreenTimeWorkaround {
     ///   private APIs, lacks the `ScreenTimeEnabled` feature, or cannot disable it.
     @available(iOS 26.1, macOS 26.1, *)
     public static func install() throws {
-        try WSTScreenTimeRuntime.install()
+        try WKTWScreenTimeRuntime.install()
     }
 }

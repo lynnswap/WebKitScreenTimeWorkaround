@@ -3,32 +3,32 @@
 import PackageDescription
 
 let package = Package(
-    name: "WebKitScreenTimeWorkaround",
+    name: "WebKitTestWorkarounds",
     platforms: [
         .iOS("17.0"),
         .macOS("14.0"),
     ],
     products: [
         .library(
-            name: "WebKitScreenTimeWorkaround",
-            targets: ["WebKitScreenTimeWorkaround"]
+            name: "WebKitTestWorkarounds",
+            targets: ["WebKitTestWorkarounds"]
         ),
     ],
     targets: [
         .target(
-            name: "WebKitScreenTimeWorkaroundRuntime",
+            name: "WebKitTestWorkaroundsRuntime",
             linkerSettings: [.linkedFramework("WebKit")]
         ),
         .target(
-            name: "WebKitScreenTimeWorkaround",
-            dependencies: ["WebKitScreenTimeWorkaroundRuntime"],
+            name: "WebKitTestWorkarounds",
+            dependencies: ["WebKitTestWorkaroundsRuntime"],
             swiftSettings: [
                 .enableUpcomingFeature("ApproachableConcurrency"),
             ],
         ),
         .testTarget(
-            name: "WebKitScreenTimeWorkaroundTests",
-            dependencies: ["WebKitScreenTimeWorkaround"],
+            name: "WebKitTestWorkaroundsTests",
+            dependencies: ["WebKitTestWorkarounds"],
             swiftSettings: [
                 .enableUpcomingFeature("ApproachableConcurrency"),
             ],

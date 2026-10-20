@@ -1,4 +1,4 @@
-# ``WebKitScreenTimeWorkaround``
+# Screen Time workaround
 
 Disable Screen Time integration in new web views to work around stalls during tests.
 
@@ -11,7 +11,7 @@ Swift 6.3 or later is required.
 | iOS / iPadOS | 17.0 or later | 26.1 or later |
 | macOS | 14.0 or later | 26.1 or later |
 
-The package can be linked on the deployment targets above. The 26.1 installation
+`WebKitTestWorkarounds` can be linked on the deployment targets above. The 26.1 installation
 minimum matches the `STScreenTimeConfigurationObserver` initialization path added
 between the public WebKit sources for 26.0 and [iOS 26.1](https://github.com/WebKit/WebKit/blob/8914df4ab564e7a9d033eb3666ada075d8878eee/Source/WebKit/UIProcess/API/Cocoa/WKWebView.mm#L428-L435) and [macOS 26.1](https://github.com/WebKit/WebKit/blob/6214d577e8b731b897ec7155a4be62efe1ffd854/Source/WebKit/UIProcess/API/Cocoa/WKWebView.mm#L428-L435).
 This path creates the observer and reads `configuration.enforcesChildRestrictions`.
@@ -22,7 +22,7 @@ Call ``ScreenTimeWorkaround/install()`` on the main actor before creating the fi
 
 ```swift
 import WebKit
-import WebKitScreenTimeWorkaround
+import WebKitTestWorkarounds
 
 @MainActor
 func makeWebView() throws -> WKWebView {
@@ -45,10 +45,3 @@ preservation and archived web view decoding.
 A macOS Screen Time stall and the need for this workaround have not been
 demonstrated. The source identifies when this observer path was introduced; the
 earliest OS version with a measurable stall has not been confirmed.
-
-## Topics
-
-### Installing the workaround
-
-- ``ScreenTimeWorkaround``
-- ``ScreenTimeWorkaround/install()``
