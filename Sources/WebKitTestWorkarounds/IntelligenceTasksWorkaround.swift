@@ -1,11 +1,11 @@
-#if targetEnvironment(simulator)
+#if os(iOS) && targetEnvironment(simulator)
 
 import Foundation
 internal import WebKitTestWorkaroundsRuntime
 
 /// Temporarily unregisters `intelligencetasksd` from the current launchd domain.
 ///
-/// This affects the entire Simulator device. Coordinate one stop/restore pair
+/// This affects the entire iOS Simulator device. Coordinate one stop/restore pair
 /// across the test process; other processes do not share this type's saved
 /// registration.
 @MainActor

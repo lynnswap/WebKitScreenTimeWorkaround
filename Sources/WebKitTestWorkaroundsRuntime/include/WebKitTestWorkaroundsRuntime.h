@@ -8,7 +8,7 @@ NS_SWIFT_UI_ACTOR
 + (BOOL)installWithError:(NSError * _Nullable * _Nullable)error NS_SWIFT_NAME(install());
 @end
 
-#if TARGET_OS_SIMULATOR
+#if TARGET_OS_IOS && TARGET_OS_SIMULATOR
 
 @interface WKTWLaunchctlResult : NSObject
 @property (nonatomic, readonly) int exitStatus;

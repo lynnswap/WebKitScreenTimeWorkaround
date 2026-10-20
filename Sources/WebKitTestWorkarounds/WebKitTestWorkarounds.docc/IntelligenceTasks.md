@@ -23,7 +23,7 @@ import Testing
 import WebKit
 import WebKitTestWorkarounds
 
-#if targetEnvironment(simulator)
+#if os(iOS) && targetEnvironment(simulator)
 @Test
 @MainActor
 func newWebView() throws {

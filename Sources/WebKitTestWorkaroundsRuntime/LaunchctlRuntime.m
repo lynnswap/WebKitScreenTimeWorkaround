@@ -1,6 +1,6 @@
 #import "WebKitTestWorkaroundsRuntime.h"
 
-#if TARGET_OS_SIMULATOR
+#if TARGET_OS_IOS && TARGET_OS_SIMULATOR
 
 #include <errno.h>
 #include <spawn.h>
